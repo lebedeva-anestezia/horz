@@ -1,8 +1,6 @@
-package com.nastik.timer;
+package com.nastik.horz.domain;
 
 import com.nastik.horz.config.ScheduleConfig;
-import com.nastik.horz.domain.ScheduleController;
-import com.nastik.horz.domain.WindowController;
 import com.nastik.horz.pojo.Session;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,27 +15,25 @@ import java.util.Optional;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ScheduleControllerTest {
-
-    @Mock
-    WindowController windowController;
+class SessionGeneratorTest {
 
     @Mock
     ScheduleConfig scheduleConfig;
 
     @InjectMocks
-    ScheduleController scheduleController;
+    SessionGenerator sessionGenerator;
 
     @BeforeEach
     public void init() {
         when(scheduleConfig.getMinLengthMinutes()).thenReturn(10);
         when(scheduleConfig.getMaxLengthMinutes()).thenReturn(15);
+        when(scheduleConfig.getSlidingWindowMinutes()).thenReturn(60);
     }
 
 
     @Test
     public void testGenerateSession() {
-        Optional<Session> session = scheduleController
+        Optional<Session> session = sessionGenerator
                 .generateSession(LocalDateTime.now(), LocalDateTime.now().plusHours(2));
 
         assert(session.isPresent());
@@ -48,11 +44,25 @@ class ScheduleControllerTest {
         LocalDateTime start = LocalDateTime.now();
         LocalDateTime end = start.plusHours(2);
 
-        Optional<Session> session = scheduleController.generateSession(start, end);
+        Optional<Session> session = sessionGenerator.generateSession(start, end);
 
         assert(session.isPresent());
         assert(session.get().getBegin().isAfter(start));
         assert(session.get().getEnd().isBefore(end));
+    }
+
+    @Test
+    public void testGenerateSessionTimeIsInsideSlidingWindow() {
+        LocalDateTime start = LocalDateTime.now();
+        LocalDateTime end = start.plusHours(20);
+
+        LocalDateTime slidingWindowEnd = start.plusMinutes(scheduleConfig.getSlidingWindowMinutes());
+
+        Optional<Session> session = sessionGenerator.generateSession(start, end);
+
+        assert(session.isPresent());
+        assert(session.get().getBegin().isAfter(start));
+        assert(session.get().getEnd().isBefore(slidingWindowEnd));
     }
 
 }

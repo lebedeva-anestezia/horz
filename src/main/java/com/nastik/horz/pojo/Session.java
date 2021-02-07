@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 public class Session {
-    @JsonSerialize(using = DateTimeSerializer.class)
+    //@JsonSerialize(using = DateTimeSerializer.class)
     public LocalDateTime begin;
-    @JsonSerialize(using = DateTimeSerializer.class)
+    //@JsonSerialize(using = DateTimeSerializer.class)
     public LocalDateTime end;
 }

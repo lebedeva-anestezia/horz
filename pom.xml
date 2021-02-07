@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.nastik</groupId>
-	<artifactId>timer</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>timer</name>
-	<description>Timer</description>
+	<artifactId>horz</artifactId>
+	<version>1.0</version>
+	<name>horz</name>
+	<description>horz</description>
 	<properties>
 		<java.version>8</java.version>
 	</properties>

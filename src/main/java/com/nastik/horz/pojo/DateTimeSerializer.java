@@ -24,6 +24,6 @@ public class DateTimeSerializer extends StdSerializer<LocalDateTime> {
             LocalDateTime value, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
 
-        jgen.writeObject(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(value.atZone(ZoneId.of("CET"))));
+        jgen.writeObject(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(value.atZone(ZoneId.of("GMT"))));
     }
 }

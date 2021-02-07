@@ -1,4 +1,4 @@
-package com.nastik.timer;
+package com.nastik.horz;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
